@@ -29,7 +29,8 @@ The three folder will be like this:
     └── /bin
         └── some_files.some_extension
 ├── /incremental
-├── graph_project.exe
+├── graph-app-console.exe
+├── input.txt
 └── some_files.some_extension
 </pre>
 
@@ -38,9 +39,11 @@ Fist, your graph need to stay in txt file in respective format:
 - First line have "D" to digraph and "ND" to bidirectional graph
 - Other line must be tuple of nodes. Brackets, braces, parentheses and letters are optional. Numbers and comma are required.
 
+After txt file in required format, you need past your file on root app directory with name input.txt
+
 Important, if your nodes sequence starts with 1 or contains gaps in the count sequence, like [(A1,A4),(A1,A2),(A2,A4)], this nodes will be replaced to [(v0,v2),(v0,v1),(v1,v2)]. Input file examples is above:
 ```
-ND
+D
 v0,v3
 v1,v4
 v3,v1
