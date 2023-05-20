@@ -14,7 +14,7 @@ use controllers::handlers::*;
 use crate::cmd::use_cmd::clear_console;
 
 
-fn exibir_menu() {
+fn show_menu() {
     println!("Selecione uma opção:");
     println!("1 - Carregar arquivo");
     println!("2 - Exportar svg");
@@ -25,31 +25,52 @@ fn exibir_menu() {
     println!("7 - Visitar arestas");
     println!("8 - Sair");
 }
+
+fn show_small_menu() {
+    println!("Selecione uma opção:");
+    println!("1 - Carregar arquivo");
+    println!("8 - Sair");
+}
+
 fn main() {
     let mut graph = Representation::new();
     loop {
-        clear_console();
-        exibir_menu();
-
+        if graph.get_vertex_list().len() == 0 { show_small_menu() } else { show_menu() }
+        
         let mut opcao = String::new();
         print!("Opção: ");
         io::stdout().flush().unwrap();
         io::stdin().read_line(&mut opcao).expect("Falha ao ler a entrada.");
+        clear_console();
 
-        match opcao.trim().parse::<u32>() {
-            Ok(1) => handle_load_file(&mut graph),
-            Ok(2) => handle_export_svg(&mut graph),
-            Ok(3) => handle_vertex_degree(&mut graph),
-            Ok(4) => handle_vertex_neighbors(&mut graph),
-            Ok(5) => handle_vertex_adjacency(&mut graph),
-            Ok(6) => handle_tree_detection(&mut graph),
-            Ok(7) => handle_visit_edges(&mut graph),
-            Ok(8) => {
-                println!("Você selecionou a opção 'Sair'.");
-                break;
+        if graph.get_vertex_list().len() == 0 {
+            match opcao.trim().parse::<u32>() {
+                Ok(1) => handle_load_file(&mut graph),
+                Ok(8) => {
+                    println!("Você selecionou a opção 'Sair'.");
+                    break;
+                }
+                _ => println!("Opção inválida. Tente novamente."),
             }
-            _ => println!("Opção inválida. Tente novamente."),
+        } else {
+            match opcao.trim().parse::<u32>() {
+                Ok(1) => handle_load_file(&mut graph),
+                Ok(2) => handle_export_svg(&mut graph),
+                Ok(3) => handle_vertex_degree(&mut graph),
+                Ok(4) => handle_vertex_neighbors(&mut graph),
+                Ok(5) => handle_vertex_adjacency(&mut graph),
+                Ok(6) => handle_tree_detection(&mut graph),
+                Ok(7) => handle_visit_edges(&mut graph),
+                Ok(8) => {
+                    println!("Você selecionou a opção 'Sair'.");
+                    break;
+                }
+                _ => println!("Opção inválida. Tente novamente."),
+            }
+
         }
+
+        
         //graph.print_graph();
     }
 }
