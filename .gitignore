@@ -1,0 +1,7 @@
+/target
+.vscode
+/external
+graphviz.dot
+/Graphviz
+output.svg
+/data
